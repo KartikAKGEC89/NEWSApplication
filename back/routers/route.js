@@ -1,10 +1,16 @@
 const express = require('express');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+
+dotenv.config({ path: './config.env'});
 
 
 const router = express.Router();
 
 require('../database/db');
 const User = require('../model/user');
+const Token = require('../model/token');
 
 /* register ki API */
 
@@ -43,11 +49,79 @@ router.post('/register', async (req, res) => {
 
 
 
-/* register ki API */ 
+/* register ki API */
 
 
 
+// /* Login ki API */ 
 
+router.post('/login', async (req, res) => {
+       
+        try {
+            const { username, password} = req.body;
+
+            if (!username || !password)
+            {
+               return res.json({ message : 'Invalid'})
+            }
+            
+            const userLogin = await User.findOne({ username: username });
+
+            //  Token part ************************************************************************************************
+            
+            const token = await userLogin.generateAuthToken();
+            console.log(token);
+            console.log(userLogin);
+
+                if (userLogin)
+            {const ismatch = await bcrypt.compare(password, userLogin.password);
+
+            if (!ismatch)
+            {
+                res.json({ message: 'Invalid' });
+                }else
+            {res.json({ message: 'Successful' });
+                
+                }
+
+            }else {
+                     res.json({ message: 'Invalid' });
+                }
+        } catch (err) {
+            console.log(err);
+        }
+    
+    
+    
+
+//     // try {
+
+//     //     const user = await User.findone({ username: req.body.username });
+//     // if (!user) {
+//     //     return res.status(400).json({ msg: ' username not match ' });
+//     //     }
+        
+//     //     const match = await bcrypt.compare(req.body.password, user.password);
+//     //     if (match) {
+//     //         const accesstoken = jwt.sign(user.toJson(), process.env.ACCESS_SECRET_KEY, { expiresIn: '15m' });
+//     //         const refreshtoken = jwt.sign(user.toJson(), process.env.REFRESH_SECRET_KEY);
+               
+//     //         const newToken = new Token({ token: refreshtoken })
+            
+//     //         await newToken.save();
+
+//     //         return response.status(200).json({ accesstoken: accesstoken, refreshtoken: refreshtoken, name: user.name, username: user.username})
+
+//     //     } else {
+//     //         res.status(400).json({ msg: "Invalid password" });
+//     //     }
+//     // } catch (err) {
+//     //     return res.json(500).json({msg: 'Error While Login '})
+//     // }
+});
+    
+
+// /* Login ki API */ 
 
 
 

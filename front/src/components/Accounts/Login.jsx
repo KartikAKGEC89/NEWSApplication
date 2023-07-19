@@ -40,11 +40,17 @@ import { API } from '../../Api/api.js';
     password: ''
 };
 
+   const loginInitialValues = {
+    username: '',
+    password: ''
+};
+
 const Login = () => {
     const imageURL = 'https://m.media-amazon.com/images/I/81FVkuV+yEL.png';
     
     const [account, toggleaccount] = useState('Login');
     const [signup, setSignup] = useState(signupInitialValues);
+    const [login, setlogin] = useState(loginInitialValues);
     const [Error, setError] = useState('');
 
     const togglesignup = () => {
@@ -53,6 +59,10 @@ const Login = () => {
 
     const onInputChange = (e) => {
         setSignup({ ...signup, [e.target.name]: e.target.value });
+    }
+
+    const onValueChange = (e) => {
+        setlogin({ ...login, [e.target.name]: e.target.value });
     }
 
     const signupUser = async () => {
@@ -66,16 +76,26 @@ const Login = () => {
         }
     }
 
+    const loginUser = async () => {
+        let response = await API.userLoginup(login);
+        if (response.isSuccess) {
+            setError('');
+            setlogin(loginInitialValues);
+        } else {
+            setError('Something went wrong');
+        }
+    }
+
   return (
       <Component>
           <Box>
               <Image src={imageURL} alt='login' /> 
               {  account === 'Login' ?
                 <Wrapper>
-                  <TextField id="standard-basic" label="Username" variant="standard"/>
-                  <TextField id="standard-basic" label="Password" variant="standard"/>
+                  <TextField variant="standard" value={login.username} onChange={(e) => onValueChange(e)} name='username' label="Username" />
+                  <TextField variant="standard" value={login.password} onChange={(e) => onValueChange(e)} name='password' label="Password" />
                   <SignButton variant="text" onClick={() => togglesignup()}>Create an account</SignButton>
-                  <LoginButton variant="contained">Login</LoginButton> 
+                  <LoginButton variant="contained" onClick={() => loginUser()}>Login</LoginButton> 
               </Wrapper>
               :
               <Wrapper>
