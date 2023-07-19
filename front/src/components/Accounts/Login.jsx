@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { Box, TextField, Button, styled, Typography } from '@mui/material';
 import { API } from '../../Api/api.js';
 
+import { useNavigate } from 'react-router-dom';
+
     const Component = styled(Box)`
     width:400px;
     margin:auto;
@@ -45,13 +47,15 @@ import { API } from '../../Api/api.js';
     password: ''
 };
 
-const Login = () => {
+const Login = ( { isUserAuthenticated } ) => {
     const imageURL = 'https://m.media-amazon.com/images/I/81FVkuV+yEL.png';
     
     const [account, toggleaccount] = useState('Login');
     const [signup, setSignup] = useState(signupInitialValues);
     const [login, setlogin] = useState(loginInitialValues);
     const [Error, setError] = useState('');
+
+    const navigate = useNavigate();
 
     const togglesignup = () => {
         account === 'signup' ? toggleaccount('Login') : toggleaccount('signup')
@@ -80,7 +84,16 @@ const Login = () => {
         let response = await API.userLoginup(login);
         if (response.isSuccess) {
             setError('');
+
+
+            
+            sessionStorage.setItem('token', `Bearer ${response.data.token}`);
+
+            
+            isUserAuthenticated(true);
             setlogin(loginInitialValues);
+            navigate('/');
+
         } else {
             setError('Something went wrong');
         }
