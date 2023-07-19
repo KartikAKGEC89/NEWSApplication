@@ -1,15 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-import { Box,TextField,Button,styled } from '@mui/material';
-
-const Login = () => {
-    const imageURL = 'https://m.media-amazon.com/images/I/81FVkuV+yEL.png';
-
-    const [account, toggleaccount] = useState('Login')
-
-   const togglesignup= () => {
-    account === 'signup' ? toggleaccount('Login') : toggleaccount('signup')
-    }
+import { Box, TextField, Button, styled, Typography } from '@mui/material';
+import { API } from '../../Api/api.js';
 
     const Component = styled(Box)`
     width:400px;
@@ -41,6 +33,39 @@ const Login = () => {
     const SignButton = styled(Button)`
     text-transform: none; 
     `;
+
+      const signupInitialValues = {
+    name: '',
+    username: '',
+    password: ''
+};
+
+const Login = () => {
+    const imageURL = 'https://m.media-amazon.com/images/I/81FVkuV+yEL.png';
+    
+    const [account, toggleaccount] = useState('Login');
+    const [signup, setSignup] = useState(signupInitialValues);
+    const [Error, setError] = useState('');
+
+    const togglesignup = () => {
+        account === 'signup' ? toggleaccount('Login') : toggleaccount('signup')
+    }
+
+    const onInputChange = (e) => {
+        setSignup({ ...signup, [e.target.name]: e.target.value });
+    }
+
+    const signupUser = async () => {
+        let response = await API.userSignup(signup);
+        if (response.isSuccess) {
+            setError('');
+            setSignup(signupInitialValues);
+            toggleaccount('Login')
+        } else {
+            setError('Something went wrong');
+        }
+    }
+
   return (
       <Component>
           <Box>
@@ -54,11 +79,12 @@ const Login = () => {
               </Wrapper>
               :
               <Wrapper>
-                  <TextField id="standard-basic" label="Name" variant="standard" />
-                  <TextField id="standard-basic" label="Username" variant="standard" />
-                  <TextField id="standard-basic" label="Password" variant="standard"/>
+                  <TextField variant="standard" onChange={(e) => onInputChange(e)} name='name' label="Name"  />
+                  <TextField  variant="standard" onChange={(e) => onInputChange(e)} name='username' label="Username" />
+                  <TextField  variant="standard" onChange={(e) => onInputChange(e)} name='password' label="Password"  />
                   <LoginButton variant="text" onClick={() => togglesignup()}>Already have an account</LoginButton>
-                  <SignButton variant="contained">SignUp</SignButton> 
+                  <SignButton variant="contained" onClick={() => signupUser()}>SignUp</SignButton> 
+                      {Error && <Typography> { Error } </Typography>}    
               </Wrapper>
               }
           </Box>    
