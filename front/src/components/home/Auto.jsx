@@ -1,47 +1,34 @@
-import React, { useState, useEffect } from "react";
-import { Card, Button } from "antd";
-import axios from "axios";
+import React from 'react';
+import { Card, CardHeader, Avatar, CardMedia, CardContent, Typography} from '@mui/material';
 
-const { Meta } = Card;
 
-function Auto() {
-  const [news, setNews] = useState([]);
+  const Auto = () => {
+    return (
+      <Card sx={{ maxWidth: '45vw', maxHeight: '45vh', marginLeft: '2vw', marginTop: '2vh'}}>
+        <CardHeader
+          avatar={
+            <Avatar sx={{ backgroundColor: 'red' }} aria-label="recipe">
+              AAJ TAK
+            </Avatar>
+          }
+          title="AAJ TAK"
+          subheader="September 14, 2016"
+        />
+        <CardMedia
+          component="img"
+          height="250"
+          image="https://i.ytimg.com/vi/Iyluevka7Ak/maxresdefault.jpg"
+          alt="Paella dish"
+        />
+        <CardContent>
+          <Typography variant="body2" color="text.secondary">
+            Hindi News Live: देश दुनिया की सुबह की 100 बड़ी खबरें | Nonstop 100 | Latest News | Aaj Tak - YouTube
+Images may be subject to copyright. Learn More
+          </Typography>
+        </CardContent>
+      </Card>
+    )
+  }
 
-  useEffect(() => {
-    const loadNews = async () => {
-      const response = await axios.get(
-        "https://newsapi.org/v2/top-headlines?country=in&apiKey=d48d3642086947ca81086c2671881cd5"
-      );
-      setNews(response.data.articles);
-    };
-    loadNews();
-  }, []);
-
-  console.log("news", news);
-
-  return (
-    <div className="App">
-    
-      {news &&
-        news.map((item, index) => {
-          return (
-            <Card
-              key={index}
-              hoverable
-              style={{ width: "90vw", margin: "5vw" }}
-              cover={<img alt="News Banner" src={item.urlToImage} />}
-            >
-              <Meta title={item.title} description={item.content} />
-              <a href={item.url} target="_blank" rel="noopener noreferrer">
-                <Button type="primary" style={{ marginTop: "10px" }}>
-                  Read More
-                </Button>
-              </a>
-            </Card>
-          );
-        })}
-    </div>
-  );
-}
 
 export default Auto;

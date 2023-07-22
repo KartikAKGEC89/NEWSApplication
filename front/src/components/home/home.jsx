@@ -10,6 +10,13 @@ const Home = () => {
       <Grid container>
         <Grid container item lg={12} xs={12} sx={{ flexGrow: 1 }}>
           <Auto />  
+          <Auto />
+          <Auto />  
+          <Auto />
+          <Auto />  
+          <Auto />
+          <Auto />  
+          <Auto />
         </Grid>
       </Grid>
       <footer style={{ backgroundColor: 'black', color: 'white', textAlign:'center'}}>
