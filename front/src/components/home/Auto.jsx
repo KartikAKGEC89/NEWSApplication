@@ -1,34 +1,47 @@
-import React from 'react';
-import { Card, CardActionArea, CardMedia, CardContent, Typography, styled } from '@mui/material';
+import React, { useState, useEffect } from "react";
+import { Card, Button } from "antd";
+import axios from "axios";
 
-const StyleCard = styled(Card)`
-margin: 10px 14px 10px 5px;
+const { Meta } = Card;
 
-`;
+function Auto() {
+  const [news, setNews] = useState([]);
 
-const Auto = () => {
-    return (
-      <>
-     <StyleCard sx={{ maxWidth: 350}}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="130"
-          image="https://akm-img-a-in.tosshub.com/indiatoday/images/story/202307/ap23194754246610_3-sixteen_nine.jpg?VersionId=_RV4jKekoyGfRZ0E20IhYV6NBsUS9n3d&size=690:388"
-          alt="green iguana"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            India Vs WestIndies
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Virat Kohli, on Friday, July 21, ended his five-year wait for a hundred in an overseas Test.
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </StyleCard>
-    </>
-  )
+  useEffect(() => {
+    const loadNews = async () => {
+      const response = await axios.get(
+        "https://newsapi.org/v2/top-headlines?country=in&apiKey=d48d3642086947ca81086c2671881cd5"
+      );
+      setNews(response.data.articles);
+    };
+    loadNews();
+  }, []);
+
+  console.log("news", news);
+
+  return (
+    <div className="App">
+    
+      {news &&
+        news.map((item, index) => {
+          return (
+            <Card
+              key={index}
+              hoverable
+              style={{ width: "90vw", margin: "5vw" }}
+              cover={<img alt="News Banner" src={item.urlToImage} />}
+            >
+              <Meta title={item.title} description={item.content} />
+              <a href={item.url} target="_blank" rel="noopener noreferrer">
+                <Button type="primary" style={{ marginTop: "10px" }}>
+                  Read More
+                </Button>
+              </a>
+            </Card>
+          );
+        })}
+    </div>
+  );
 }
 
 export default Auto;
