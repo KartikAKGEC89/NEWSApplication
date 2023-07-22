@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardHeader, Avatar, CardMedia, CardContent, Typography} from '@mui/material';
+import { Card, CardHeader, Avatar, CardMedia, CardContent, Typography, Button} from '@mui/material';
 
 
   const Auto = () => {
@@ -16,7 +16,7 @@ import { Card, CardHeader, Avatar, CardMedia, CardContent, Typography} from '@mu
         />
         <CardMedia
           component="img"
-          height="250"
+          height="120"
           image="https://i.ytimg.com/vi/Iyluevka7Ak/maxresdefault.jpg"
           alt="Paella dish"
         />
@@ -25,6 +25,7 @@ import { Card, CardHeader, Avatar, CardMedia, CardContent, Typography} from '@mu
             Hindi News Live: देश दुनिया की सुबह की 100 बड़ी खबरें | Nonstop 100 | Latest News | Aaj Tak - YouTube
 Images may be subject to copyright. Learn More
           </Typography>
+          <Button variant="contained">Comment</Button>
         </CardContent>
       </Card>
     )
