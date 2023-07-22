@@ -22,7 +22,6 @@ const Header = () => {
       <Com>
           <Container>
              <Link to='/'>Home</Link>
-             <Link to='/about'>About</Link>
              <Link to= '/contact'>Contact</Link>
              <Link to='/login'>Logout</Link>
           </Container>
@@ -30,4 +29,5 @@ const Header = () => {
   )
 }
 
-export default Header
+
+export default Header;

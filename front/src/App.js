@@ -7,13 +7,14 @@ import { useState } from 'react';
 import Login from './components/Accounts/Login';
 import Home from './components/home/home';
 import Header from './components/header/Header';
+import Contact from './components/home/Contact';
 
 
 const PrivateRoute = ( { isAuthenticated, ...props}) => {
   return isAuthenticated ?
     <>
     <Header />
-    <Outlet />
+      <Outlet />
     </>
     : <Navigate replace to='/login' />
 }
@@ -32,6 +33,9 @@ function App() {
 
           <Route path='/' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
               <Route path='/' element={<Home />} />
+          </Route>
+          <Route path='/contact' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+              <Route path='/contact' element={<Contact />} />
           </Route>
       </Routes>
     </div>
