@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 
 dotenv.config({ path: './config.env'});
 
-mongoose.connect(process.env.DB, {
+mongoose.connect('mongodb+srv://Registration:2111087@cluster0.wexksa1.mongodb.net/NEWSApplication?retryWrites=true&w=majority', {
      useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
