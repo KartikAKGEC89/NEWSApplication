@@ -87,7 +87,7 @@ const Login = ( { isUserAuthenticated } ) => {
 
     const loginUser = async () => {
         let response = await API.userLoginup(login);
-        if (response.isSuccess ) {
+        if (response.isSuccess) {
             setError('');
 
 
