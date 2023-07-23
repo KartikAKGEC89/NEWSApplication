@@ -20,9 +20,8 @@ const Home = () => {
         </Grid>
       </Grid>
       <footer style={{ backgroundColor: 'black', color: 'white', textAlign:'center'}}>
-        <p style={{ margin: 5}}>@NEWS1234 -- version 1.0</p>
-        <p style={{ margin: 5}}>Developed By Kartik Tygai</p>
-         <p style={{ margintop: 5, marginBottom: 0}}>    For further details email :- s11kartik2111087@gmail.com</p>
+        <p style={{ margin: 7.5}}>@NEWS1234 -- version 1.0</p>
+         <p style={{ margintop: 7.5, marginBottom: 0}}>    For further details email :- s11kartik2111087@gmail.com</p>
       </footer>
     </>
   )

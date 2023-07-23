@@ -76,13 +76,18 @@ const Login = ( { isUserAuthenticated } ) => {
             setSignup(signupInitialValues);
             toggleaccount('Login')
         } else {
-            setError('Something went wrong');
+            return (
+                <div>
+                    Error
+                </div>
+            )
+           
         }
     }
 
     const loginUser = async () => {
         let response = await API.userLoginup(login);
-        if (response.isSuccess) {
+        if (response.isSuccess ) {
             setError('');
 
 
@@ -95,7 +100,12 @@ const Login = ( { isUserAuthenticated } ) => {
             navigate('/');
 
         } else {
-            setError('Something went wrong');
+            return (
+                <div>
+                    Error
+                </div>
+            )
+           
         }
     }
 

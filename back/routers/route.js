@@ -62,7 +62,7 @@ router.post('/login', async (req, res) => {
 
             if (!username || !password)
             {
-               return res.json({ message : 'Invalid'})
+               return res.status(422).json({ error: 'Invalid' });
             }
             
             const userLogin = await User.findOne({ username: username });
@@ -78,14 +78,14 @@ router.post('/login', async (req, res) => {
 
             if (!ismatch)
             {
-                res.json({ message: 'Invalid' });
+                return res.status(422).json({ error: 'Invalid' });
                 }else
             {res.json({ message: 'Successful' });
                 
                 }
 
             }else {
-                     res.json({ message: 'Invalid' });
+                     return res.status(422).json({ error: 'Invalid' });
                 }
         } catch (err) {
             console.log(err);
